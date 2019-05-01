@@ -37,6 +37,8 @@ include(CheckFunctionExists)
 
 if (IOS)
     INCLUDE(CmakeLists_IOS.txt)
+    include_directories(/usr/local/include)
+    include_directories(${SODIUM_INCLUDE_DIR})
 endif()
 
 cmake_minimum_required(VERSION 2.8.7)
@@ -584,6 +586,10 @@ else()
     message(STATUS "AES support disabled")
   endif()
 
+  if(IOS AND ARCH STREQUAL "x86_64")
+    set(ARCH_FLAG "-march=x86-64")
+  endif()
+  
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ARCH_FLAG}")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ARCH_FLAG}")
 
